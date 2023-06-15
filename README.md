@@ -1,5 +1,5 @@
 # DataDigger
-
+NOTICE: This will contain experimental personal changes for workflow purposes. Expect bugs.
 A dynamic, open source dataviewer for your Progress / OpenEdge databases
 
 ## Getting started
