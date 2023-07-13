@@ -5276,6 +5276,18 @@ END PROCEDURE.
 /* _UIB-CODE-BLOCK-END */
 &ANALYZE-RESUME
 
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE copyROWIDToClipboard wDataDigger 
+PROCEDURE copyROWIDToClipboard :
+  /* Copy the ROWID of the selected row to the clipboard
+  */
+  DEFINE VARIABLE cColumnValue AS CHARACTER   NO-UNDO.
+  IF VALID-HANDLE(ghDataBrowse) AND ghDataBrowse:NUM-SELECTED-ROWS > 0 THEN
+  CLIPBOARD:VALUE = STRING(ghDataBrowse:QUERY:GET-BUFFER-HANDLE(1):ROWID).
+  
+END PROCEDURE. /* copyROWIDToClipboard */
+
+
 &ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE copyLabelDataDataToClipboard wDataDigger 
 PROCEDURE copyLabelDataDataToClipboard :
   /* Copy the value of the column to the clipboard
@@ -5329,9 +5341,13 @@ PROCEDURE createMenuDataBrowse :
   hMenuItem = createMenuItem(hMenu,"Item","Copy to clipboard","copyDataToClipboard").
   ON "CHOOSE" OF hMenuItem PERSISTENT RUN copyDataToClipboard IN THIS-PROCEDURE.
   
-  /* Copy to clipboard */
+  /* Copy Label to clipboard */
   hMenuItem = createMenuItem(hMenu,"Item","Copy Label to clipboard","copyLabelDataToClipboard").
   ON "CHOOSE" OF hMenuItem PERSISTENT RUN copyLabelDataDataToClipboard IN THIS-PROCEDURE.
+  
+  /* Copy ROWID to clipboard */
+  hMenuItem = createMenuItem(hMenu,"Item","Copy ROWID to clipboard","copyROWIDToClipboard").
+  ON "CHOOSE" OF hMenuItem PERSISTENT RUN copyROWIDToClipboard IN THIS-PROCEDURE.
   
   /* Show value of field */
   hMenuItem = createMenuItem(hMenu,"Item","Show Value","showValue").
